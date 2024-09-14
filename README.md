@@ -20,5 +20,5 @@ A simple bookstore API built using **Rust**, **Actix Web**, and **MongoDB**. Thi
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/bookstore-api.git
-   cd bookstore-api
+   git clone https://github.com/leavedtrait/mongodb-rust-api.git
+   cd mongodb-rust-api
