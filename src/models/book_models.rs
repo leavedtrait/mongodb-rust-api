@@ -1,8 +1,7 @@
-use std::result;
-
-use mongodb::bson::doc;
+use mongodb::bson::{doc, Document};
 use mongodb::results::{InsertOneResult, UpdateResult};
 use mongodb::{bson::oid::ObjectId, Database};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Book {
@@ -40,16 +39,20 @@ impl Book {
             .unwrap();
         Ok(result)
     }
-    pub async fn update_one(&self , db:Database) -> Result<UpdateResult,string>{
+    pub async fn update_one(&self, db: Database) -> Result<UpdateResult, String> {
         let query: mongodb::bson::Document = doc! {"_id": self._id};
         let updated_book: mongodb::bson::Document = doc! {
             "$set": {
-                "title":self.title,
-                "isbn":self.isbn,
-                "author":self.author
+                "title": self.title.clone(),
+                "isbn": self.isbn.clone(),
+                "author": self.author
             }
         };
-        let result = db.collection("books").update_one(query, updated_book);
+        let result = db
+            .collection::<Document>("books")
+            .update_one(query, updated_book)
+            .await
+            .unwrap();
         Ok(result)
     }
 }
