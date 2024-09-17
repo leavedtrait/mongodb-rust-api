@@ -14,6 +14,7 @@ pub struct AppState {
 async fn main() -> std::io::Result<()> {
     let db: mongodb::Client = connect_to_db().await;
     HttpServer::new(move || {
+        
         let authors_scope = web::scope("/authors")
             .service(authors::delete_author_by_id)
             .service(authors::update_author)
